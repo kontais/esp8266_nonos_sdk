@@ -1,5 +1,24 @@
 /*
- *  Copyright (C) 2013 -2014  Espressif System
+ * ESPRSSIF MIT License
+ *
+ * Copyright (c) 2016 <ESPRESSIF SYSTEMS (SHANGHAI) PTE LTD>
+ *
+ * Permission is hereby granted for use on ESPRESSIF SYSTEMS ESP8266 only, in which case,
+ * it is free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished
+ * to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  */
 
@@ -16,6 +35,7 @@
 #include "queue.h"
 #include "user_config.h"
 #include "spi_flash.h"
+#include "gpio.h"
 
 #ifndef MAC2STR
 #define MAC2STR(a) (a)[0], (a)[1], (a)[2], (a)[3], (a)[4], (a)[5]
@@ -178,6 +198,7 @@ struct bss_info {
     sint16 freq_offset;
     sint16 freqcal_val;
 	uint8 *esp_mesh_ie;
+	uint8 simple_pair;
 };
 
 typedef struct _scaninfo {
@@ -605,5 +626,8 @@ typedef void (*user_ie_manufacturer_recv_cb_t)(uint8 type, const uint8 sa[6], co
 bool wifi_set_user_ie(bool enable, uint8 *m_oui, uint8 type, uint8 *user_ie, uint8 len);
 int wifi_register_user_ie_manufacturer_recv_cb(user_ie_manufacturer_recv_cb_t cb);
 void wifi_unregister_user_ie_manufacturer_recv_cb(void);
+
+void wifi_enable_gpio_wakeup(uint32 i, GPIO_INT_TYPE intr_status);
+void wifi_disable_gpio_wakeup(void);
 
 #endif
